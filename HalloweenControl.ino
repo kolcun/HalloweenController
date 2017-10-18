@@ -7,15 +7,15 @@ const char* ssid = "KrispyNet";
 const char* password = "Australia";
 
 char* overwatchTopic = "kolcun/halloween/overwatch";
-char controlTopic[50] = "kolcun/halloween/";
-char stateTopic[50];
+char controlTopic[25] = "kolcun/halloween/";
+char stateTopic[30];
 char onlineMessage[50] = "Halloween Controller online - Controller ID: ";
 char* server = "54.156.244.62";
 char* mqttMessage;
 int controllerId;
 boolean ledEnabled = true;
 char address[4];
-char clientId[50] = "halloween-controller-";
+char clientId[25] = "halloween-controller-";
 
 WiFiClient wifiClient;
 PubSubClient pubSubClient(wifiClient);
@@ -23,18 +23,6 @@ PubSubClient pubSubClient(wifiClient);
 void setup() {
   Serial.begin(115200);
   delay(10);
-
-  //char string[1000] = "this is a long string testing", sub[1000];
-  //   int position = 9, length = 6, c = 0;
-  //
-  //   while (c < length) {
-  //      sub[c] = string[position+c-1];
-  //      c++;
-  //   }
-  //   sub[c] = '\0';
-  //
-  //Serial.println(sub);
-
 
   //DIP switch
   pinMode(D5, INPUT_PULLUP);
@@ -135,7 +123,17 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
       turnOff();
     } else if (strncmp(mqttMessage, "momentary", 9) == 0) { //just the first part
       Serial.println("Monentary control");
-      momentary(String(mqttMessage).substring(9, length).toInt());
+      char sub[10];
+      int position = 10;
+      int length2 = length + 1 - 10;
+      int c = 0;
+      while (c < length2) {
+        sub[c] = mqttMessage[position + c - 1];
+        c++;
+      }
+      sub[c] = '\0';
+      momentary(atoi(sub));
+
     } else if (strncmp(mqttMessage, "ledon", length - 1) == 0) {
       Serial.println("LED enabled");
       ledEnabled = true;
@@ -146,7 +144,6 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
   }
 
 }
-
 
 void momentary(int millis) {
   Serial.print("Momentary on for millis: ");
