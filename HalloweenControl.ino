@@ -1,7 +1,7 @@
 #include <PubSubClient.h>
 #include <ESP8266WiFi.h>
 
-#define CONTACT  D1
+#define CONTACT D1
 
 const char* ssid = "KrispyNet";
 const char* password = "Australia";
@@ -60,6 +60,7 @@ void setup() {
     reconnect();
   }
 
+  blink3Times();
   blinkId();
 }
 
@@ -216,5 +217,16 @@ void blinkId() {
     delay(200);
 
   }
+}
+
+void blink3Times() {
+  for (int i = 0; i < 3; i++) {
+    turnOnLed();
+    delay(100);
+    turnOffLed();
+    delay(100);
+  }
+  delay(3000);
+
 }
 
