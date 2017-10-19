@@ -223,7 +223,7 @@ void blink3Times() {
     turnOffLed();
     delay(100);
   }
-  delay(3000);
+  delay(2000);
 
 }
 
