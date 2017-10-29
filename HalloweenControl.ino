@@ -154,7 +154,7 @@ void momentary(int millis) {
 }
 
 void turnOn() {
-  pubSubClient.publish(stateTopic, "on");
+  pubSubClient.publish(stateTopic, "ON");
   digitalWrite(CONTACT, HIGH);
   Serial.println("close contact");
   if (ledEnabled) {
@@ -163,7 +163,7 @@ void turnOn() {
 }
 
 void turnOff() {
-  pubSubClient.publish(stateTopic, "off");
+  pubSubClient.publish(stateTopic, "OFF");
   digitalWrite(CONTACT, LOW);
   Serial.println("open contact");
   if (ledEnabled) {
