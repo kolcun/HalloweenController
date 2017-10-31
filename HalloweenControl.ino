@@ -54,7 +54,7 @@ void setup() {
 
 void reconnect() {
   while (!pubSubClient.connected()) {
-    if (pubSubClient.connect("halloween", "kolcun", "MosquittoMQTTPassword$isVeryLong123")) {
+    if (pubSubClient.connect(clientId, "kolcun", "MosquittoMQTTPassword$isVeryLong123")) {
       Serial.println("Connected to MQTT broker");
       pubSubClient.publish(overwatchTopic, onlineMessage);
       Serial.print("sub to: '");
