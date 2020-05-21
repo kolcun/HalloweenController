@@ -1,16 +1,17 @@
 #include <PubSubClient.h>
 #include <ESP8266WiFi.h>
+#include "credentials.h"
 
 #define CONTACT D1
 
-const char* ssid = "KrispyNet";
-const char* password = "Australia";
+const char* ssid = WIFI_SSID;
+const char* password = WIFI_PASSWD;
 
 char* overwatchTopic = "kolcun/halloween/overwatch";
 char controlTopic[25] = "kolcun/halloween/";
 char stateTopic[30];
 char onlineMessage[50] = "Halloween Controller online - Controller ID: ";
-char* server = "54.156.244.62";
+char* server = MQTT_SERVER;
 char* mqttMessage;
 int controllerId;
 boolean ledEnabled = true;
@@ -54,7 +55,7 @@ void setup() {
 
 void reconnect() {
   while (!pubSubClient.connected()) {
-    if (pubSubClient.connect(clientId, "kolcun", "MosquittoMQTTPassword$isVeryLong123")) {
+    if (pubSubClient.connect("somfycontroller", MQTT_USER, MQTT_PASSWD)) {
       Serial.println("Connected to MQTT broker");
       pubSubClient.publish(overwatchTopic, onlineMessage);
       Serial.print("sub to: '");
@@ -226,4 +227,3 @@ void blink3Times() {
   delay(2000);
 
 }
-
